@@ -1,0 +1,59 @@
+﻿<Window x:Class = "WpfApp27.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp27"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="450" Background="#FF282835">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="7"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF535151"/>
+            <Setter Property="Foreground" Value="#FFAEAEAE"/> 
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="FontSize" Value="14"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="BorderThickness" Value="1,0,0,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border x:Name="RegestrtionPanel" Visibility="Collapsed">
+            <StackPanel>
+                <Label Content="Regestration" Margin="0,100,0,0" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE"/>
+                <Button Content="Log in" Width="100" Height="30" Margin="0,10,0,0" Click="Button_Click_1" BorderBrush="Black" BorderThickness="5,1,1,1"/>
+                <Button Content="Sign up" Width="100" Height="30" Margin="0,10,0,0" BorderBrush="Black" BorderThickness="5,1,1,1" Click="Button_Click"/>
+            </StackPanel>
+        </Border>
+        <Border x:Name="LogInPanel" Visibility="Visible">
+            <StackPanel>
+                <Label Content="Sign in" Margin="0,100,0,0" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE"/>
+                <Button Content="Log in" Width="100" Height="30" Margin="0,10,0,0" Click="Button_Click_1" BorderBrush="Black" BorderThickness="5,1,1,1"/>
+                <Button Content="Sign up" Width="100" Height="30" Margin="0,10,0,0" BorderBrush="Black" BorderThickness="5,1,1,1" Click="Button_Click"/>
+            </StackPanel>
+        </Border>
+
+        <Image Grid.Column="0"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width = "1*"/>
+            <ColumnDefinition Width = "2*"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</Window>
