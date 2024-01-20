@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,13 +24,16 @@ namespace WpfApp27
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<User> users;
-        UDP udp = new UDP("5000");
+        ObservableCollection<User> users = new ObservableCollection<User>() { new User {Login = "qwe", Mail= "qwe", Password="qwe", UserType="Student" } };
+        Client client;
+        bool check;
+        int x;
+
         public MainWindow()
         {
             InitializeComponent();
-            Task.Run(() => udp.ReceiveUsers());
-            users = udp.GetUsers();
+            client = new Client();
+
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -44,11 +48,64 @@ namespace WpfApp27
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            
+
+            if (LogInLogin.Text.Replace(" ", "")!="" && LogInPassword.Password.Replace(" ", "")!="")
+            {
+                try
+                {
+                    check = false;
+                    
+                    for (int i = 0; i<users.Count; i++)
+                        if (users[i].Login==LogInLogin.Text && users[i].Password==LogInPassword.Password)
+                        {
+                            check=true;
+                            x=i;
+                            break;
+                        }
+                    if (check)
+                    {
+                        MessageBox.Show("Ok");
+                    }
+                    else
+                        MessageBox.Show("User name or password isn't right");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+                MessageBox.Show("You should fill all filds");
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            if (LogInLogin.Text.Replace(" ", "")!="" && LogInPassword.Password.Replace(" ", "")!="")
+            {
+                try
+                {
+                    check = false;
 
+                    for (int i = 0; i<users.Count; i++)
+                        if (users[i].Login==LogInLogin.Text && users[i].Password==LogInPassword.Password)
+                        {
+                            check=true;
+                            x=i;
+                            break;
+                        }
+                    if (check)
+                    {
+                        MessageBox.Show("Ok");
+                    }
+                    else
+                        MessageBox.Show("User name or password isn't right");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+                MessageBox.Show("You should fill all filds");
         }
         private bool CheckEmail(string email) 
         {

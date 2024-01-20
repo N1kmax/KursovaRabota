@@ -18,7 +18,18 @@ namespace ServerProgramm
             Server server = new Server();
             server.Quizzes = new ObservableCollection<Quiz>() { };
             server.ShowUsers();
-            Console.ReadLine();
+            while (true) 
+            {
+                try
+                {
+                    server.StartServer();
+                    Console.ReadLine();
+                }
+                catch(Exception ex) 
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
         }
     }
 }

@@ -48,12 +48,12 @@
                 <Label Content="Name" Height="27" Foreground="#FFAEAEAE" Margin="74,0,0,0"/>
                 <Border CornerRadius="7" BorderBrush="#FFABADB3" BorderThickness="1"
         VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0">
-                    <TextBox BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
+                    <TextBox x:Name="LogInLogin" BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
                 </Border>
                 <Label Content="Password" Height="27" Foreground="#FFAEAEAE" Margin="56,0,0,0"/>
                 <Border CornerRadius="7" BorderBrush="#FFABADB3" BorderThickness="1"
 VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0">
-                    <PasswordBox BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
+                    <PasswordBox x:Name="LogInPassword" BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
                 </Border>
                 <Button Content="Sign in" Width="100" Height="30" Margin="103,10,0,0" BorderBrush="Black" Click="Button_Click_2"/>
             </WrapPanel>
@@ -81,6 +81,11 @@ VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0"
 VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0">
                     <PasswordBox BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
                 </Border>
+                <Label Content="User type" Height="27" Foreground="#FFAEAEAE" Margin="56,0,0,0"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Student" Foreground="#FFAEAEAE" Margin="0,6,0,0"/>
+                    <RadioButton Content = "Techer" Foreground="#FFAEAEAE"  Margin="3,6,0,0"/>
+                </StackPanel>
                 <Button Content="Sign up" Width="100" Height="30" Margin="103,10,0,0" BorderBrush="Black" Click="Button_Click_3"/>
             </WrapPanel>
         </Border>

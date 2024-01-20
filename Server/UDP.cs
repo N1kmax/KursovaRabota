@@ -17,6 +17,7 @@ namespace ServerProgramm
         public string Ip { get; set; }
         public string PortSend { get; set; }
         public string PortReceive { get; set; }
+        public UdpClient server;
         public UDP()
         {
 
@@ -24,69 +25,66 @@ namespace ServerProgramm
         public UDP(string portsend, string portreceive)
         {
             Ip = GetLocalIPAddress();
+            Console.WriteLine(Ip);
             PortSend = portsend;
             PortReceive = portreceive;
+            server = new UdpClient(5000);
         }
-        public void SetPoint(string portsend, string portreceive)
+        public void SetPoint(string ip,string portsend)
         {
+            Ip = ip;
             PortSend = portsend;
-            PortReceive = portreceive;
-
         }
+
         public async Task SendQuizzesAsync(ObservableCollection<Quiz> quizzes)
         {
             using (UdpClient udpClient = new UdpClient())
             {
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-
+                
                 string serializedList = JsonSerializer.Serialize(quizzes);
 
                 byte[] data = Encoding.UTF8.GetBytes(serializedList);
 
                 udpClient.Send(data, data.Length, endPoint);
+                
             }
         }
-        public async Task SendUsersAsync(ObservableCollection<Quiz> quizzes)
+        public async Task SendUsersAsync(ObservableCollection<User> users)
         {
             using (UdpClient udpClient = new UdpClient())
             {
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-
-                string serializedList = JsonSerializer.Serialize(quizzes);
-
+                string serializedList = JsonSerializer.Serialize(users);
                 byte[] data = Encoding.UTF8.GetBytes(serializedList);
 
                 udpClient.Send(data, data.Length, endPoint);
+                Console.WriteLine("Data was sended");
             }
         }
         public async Task ReceiveUsers()
         {
-            while (true)
+            using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {
-                using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
-                {
-                    var receivedData = await recriver.ReceiveAsync();
-                    string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-                    this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
-                }
-                Console.WriteLine("Data was added");
+                var receivedData = await recriver.ReceiveAsync();
+                string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
+                this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
             }
+            Console.WriteLine("Data was added");
         }
-        public async Task ReceiveQuizzes() 
+        public async Task ReceiveQuizzes()
         {
-            while (true)
+            using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {
-                using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
-                {
-                    var receivedData = await recriver.ReceiveAsync();
-                    string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-                    this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
-                }
-                Console.WriteLine("Data was added");
+                var receivedData = await recriver.ReceiveAsync();
+                string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
+                this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
             }
+            Console.WriteLine("Data was added");
         }
+        
         public ObservableCollection<Quiz> GetQuizzes()
         {
             return quizzes;
