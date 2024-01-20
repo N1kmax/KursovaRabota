@@ -11,7 +11,7 @@ namespace ServerProgramm
 {
     public class DatabaseContext
     {
-        private string connectionString = $@"Data Source = {System.Net.Dns.GetHostName()}; Initial Catalog = Users; Trusted_Connection=True; TrustServerCertificate = True";
+        private string connectionString = $@"Data Source = SQL5112.site4now.net; Initial Catalog = db_aa433a_usersdatabase; User Id = db_aa433a_usersdatabase_admin; Password = 8VYHjgKHHR-b8Gb;";
         public ObservableCollection<User> GetUsers()
         {
             using (var connection = new SqlConnection(connectionString))

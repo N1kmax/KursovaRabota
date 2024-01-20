@@ -12,6 +12,7 @@ namespace WpfApp27
     {
         string login;
         string password;
+        string mail;
         string usertype;
         public string Login
         {
@@ -31,6 +32,15 @@ namespace WpfApp27
                 OnPropetyChnaged("Password");
             }
         }
+        public string Mail
+        {
+            get { return mail; }
+            set
+            {
+                password = value;
+                OnPropetyChnaged("Mail");
+            }
+        }
         public string UserType
         {
             get { return usertype; }
@@ -44,12 +54,14 @@ namespace WpfApp27
         {
             Login = "New User";
             Password = "User1234";
+            Mail = "user@gmail.com";
             UserType = "Student";
         }
-        public User(string login, string password, string usertype) 
+        public User(string login, string mail, string password, string usertype) 
         {
             Login = login;
             Password = password;
+            Mail = mail;
             UserType = usertype;
         }
         public event PropertyChangedEventHandler PropertyChanged;

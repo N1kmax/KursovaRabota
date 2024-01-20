@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace ServerProgramm
 {
@@ -14,6 +16,8 @@ namespace ServerProgramm
         {
 
             Server server = new Server();
+            server.Quizzes = new ObservableCollection<Quiz>() { };
+            server.ShowUsers();
             Console.ReadLine();
         }
     }
