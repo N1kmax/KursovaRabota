@@ -12,6 +12,11 @@ namespace ServerProgramm
 {
     internal class Program
     {
+        public class MyClass
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
+        }
         static void Main(string[] args)
         {
 

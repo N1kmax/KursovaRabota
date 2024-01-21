@@ -9,6 +9,7 @@ namespace ServerProgramm
     public class User
     {
         string login;
+        string mail;
         string password;
         string usertype;
         public string Login
@@ -27,6 +28,14 @@ namespace ServerProgramm
                 password = value;
             }
         }
+        public string Mail
+        {
+            get { return mail; }
+            set
+            {
+                password = value;
+            }
+        }
         public string UserType
         {
             get { return usertype; }
@@ -38,12 +47,14 @@ namespace ServerProgramm
         public User()
         {
             Login = "New User";
+            Mail = "newuser@gmail.com";
             Password = "User1234";
             UserType = "Student";
         }
-        public User(string login, string password, string usertype)
+        public User(string login, string mail, string password, string usertype)
         {
             Login = login;
+            Mail = mail;
             Password = password;
             UserType = usertype;
         }

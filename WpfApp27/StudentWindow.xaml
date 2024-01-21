@@ -30,24 +30,34 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="TextBox">
-            
-        </Style>
     </Window.Resources>
     <Grid>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="Profile">
-                
-            </TabItem>
-            <TabItem Header="Quizzes" Margin="0,0,0,-10">
-                <Border CornerRadius="15" Margin="20 20 20 20">
+            <TabItem Name="Results" Header="Quizzes" Height="210" Foreground="AliceBlue">
+                <Border>
                     <StackPanel>
-                        <ListBox ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835">
+                        <ListBox x:Name="Quiz" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ResultsChanged" BorderThickness="1,0,1,1" BorderBrush="White">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="5">
-                                        <TextBlock FontSize="20" Text="{Binding Path=Name}"/>
-                                        <TextBlock Text="{Binding Path=TeacherName}"/>
+                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Path=Name}"/>
+                                        <TextBlock Foreground="#FF535151" Text="{Binding Path=Teacher.Login}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </TabItem>
+            <TabItem Name="quizzes" Header="Results" Height="210" VerticalAlignment="Top">
+                <Border>
+                    <StackPanel>
+                        <ListBox x:Name="Quizzes" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="QuizzesChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Path=Name}"/>
+                                        <TextBlock Foreground="#FF535151" Text="{Binding Path=Teacher.Login}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

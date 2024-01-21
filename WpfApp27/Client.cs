@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace WpfApp27
 {
@@ -39,7 +40,6 @@ namespace WpfApp27
             {
                 case 0:
                     await udp.ReceiveUsers();
-                    users = udp.GetUsers();
                     break;
                 case 2:
                     await udp.ReceiveQuizzes();

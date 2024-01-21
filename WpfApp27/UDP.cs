@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using Newtonsoft.Json;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -16,13 +17,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace WpfApp27
 {
     public class UDP
     {
         ObservableCollection<Quiz> quizzes;
-        ObservableCollection<User> users;
+        ObservableCollection<User> users { get; set; }
         public string action;
         public string Ip { get; set; }
         public string PortSend { get; set; }
@@ -41,46 +45,47 @@ namespace WpfApp27
         }
         public async Task SendQuizzesAsync(ObservableCollection<Quiz> quizzes)
         {
-            using (UdpClient udpClient = new UdpClient())
-            {
 
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
 
-                string serializedList = JsonSerializer.Serialize(quizzes);
+            byte[] data = Serialize(quizzes);
 
-                byte[] data = Encoding.UTF8.GetBytes(serializedList);
-
-                await udpClient.SendAsync(data, data.Length, endPoint);
-            }
+            await udpClient.SendAsync(data, data.Length, endPoint);
         }
         public async Task SendUsersAsync(ObservableCollection<User> users)
         {
-            using (UdpClient udpClient = new UdpClient())
-            {
 
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
 
-                string serializedList = JsonSerializer.Serialize(users);
+            byte[] data = Serialize(users);
 
-                byte[] data = Encoding.UTF8.GetBytes(serializedList);
-
-                await udpClient.SendAsync(data, data.Length, endPoint);
-            }
+            await udpClient.SendAsync(data, data.Length, endPoint);
+          
         }
         public async Task ReceiveUsers()
         {
-            var receivedData = await udpClient.ReceiveAsync();
-            MessageBox.Show(receivedData.RemoteEndPoint.Port.ToString());
-            string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-            MessageBox.Show(receivedString);
-            MessageBox.Show($"{Ip}:{PortReceive}");
-            users = JsonSerializer.Deserialize<ObservableCollection<User>>(receivedString);
+            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortReceive));
+            byte[] receivedData = udpClient.Receive(ref clientEndPoint);
+            MessageBox.Show($"{Encoding.UTF8.GetString(receivedData)}");
+            users = Deserialize<ObservableCollection<User>>(receivedData);
         }
         public async Task ReceiveQuizzes()
         {
-            var receivedData = await udpClient.ReceiveAsync();
-            string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-            quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
+            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
+            byte[] receivedData = udpClient.Receive(ref clientEndPoint);
+            
+            quizzes = Deserialize<ObservableCollection<Quiz>>(receivedData);
+            MessageBox.Show(users[0].Login);
+        }
+        static T Deserialize<T>(byte[] data)
+        {
+            string jsonString = Encoding.UTF8.GetString(data);
+            return JsonConvert.DeserializeObject<T>(jsonString);
+        }
+        static byte[] Serialize(object obj)
+        {
+            string jsonString = JsonConvert.SerializeObject(obj);
+            return Encoding.UTF8.GetBytes(jsonString);
         }
 
         public ObservableCollection<Quiz> GetQuizzes()
@@ -89,6 +94,7 @@ namespace WpfApp27
         }
         public ObservableCollection<User> GetUsers()
         {
+            MessageBox.Show(users[0].Login);
             return users;
         }
         static string GetLocalIPAddress()

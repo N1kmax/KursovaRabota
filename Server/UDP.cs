@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using Newtonsoft.Json;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace ServerProgramm
 {
@@ -26,7 +30,7 @@ namespace ServerProgramm
         {
             Ip = GetLocalIPAddress();
             Console.WriteLine(Ip);
-            PortSend = portsend;
+            PortSend = "5001";
             PortReceive = portreceive;
             server = new UdpClient(5000);
         }
@@ -43,34 +47,44 @@ namespace ServerProgramm
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
                 
-                string serializedList = JsonSerializer.Serialize(quizzes);
 
-                byte[] data = Encoding.UTF8.GetBytes(serializedList);
+                byte[] data = Serialize(quizzes);
 
-                udpClient.Send(data, data.Length, endPoint);
+                await udpClient.SendAsync(data, data.Length, endPoint);
                 
             }
         }
+
         public async Task SendUsersAsync(ObservableCollection<User> users)
         {
             using (UdpClient udpClient = new UdpClient())
             {
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-                string serializedList = JsonSerializer.Serialize(users);
-                byte[] data = Encoding.UTF8.GetBytes(serializedList);
+                await Console.Out.WriteLineAsync(endPoint.ToString());
+                byte[] data = Serialize(users);
 
-                udpClient.Send(data, data.Length, endPoint);
+                await udpClient.SendAsync(data, data.Length, endPoint);
                 Console.WriteLine("Data was sended");
             }
         }
+        static byte[] Serialize(object obj)
+        {
+            string jsonString = JsonConvert.SerializeObject(obj);
+            return Encoding.UTF8.GetBytes(jsonString);
+        }
+        static T Deserialize<T>(byte[] data)
+    {
+        string jsonString = Encoding.UTF8.GetString(data);
+        return JsonConvert.DeserializeObject<T>(jsonString);
+    }
         public async Task ReceiveUsers()
         {
             using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {
-                var receivedData = await recriver.ReceiveAsync();
-                string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-                this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
+                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
+                byte[] receivedData = recriver.Receive(ref clientEndPoint);
+                this.users= Deserialize<ObservableCollection<User>>(receivedData);
             }
             Console.WriteLine("Data was added");
         }
@@ -78,9 +92,9 @@ namespace ServerProgramm
         {
             using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {
-                var receivedData = await recriver.ReceiveAsync();
-                string receivedString = Encoding.UTF8.GetString(receivedData.Buffer);
-                this.quizzes= JsonSerializer.Deserialize<ObservableCollection<Quiz>>(receivedString);
+                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
+                byte[] receivedData = recriver.Receive(ref clientEndPoint);
+                this.quizzes= Deserialize<ObservableCollection<Quiz>>(receivedData);
             }
             Console.WriteLine("Data was added");
         }

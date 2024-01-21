@@ -20,7 +20,7 @@ namespace ServerProgramm
         int action;
         public Server()
         {
-            udp = new UDP("5001", "5000");
+            udp = new UDP("5000","5000");
             db = new DatabaseContext();
             Users = db.GetUsers();
 
@@ -46,8 +46,6 @@ namespace ServerProgramm
             {
                 case 0:
                     await udp.SendUsersAsync(Users);
-                    ListenClients();
-                    Console.WriteLine("Get");
                     break;
                 case 1:
                     await udp.ReceiveUsers();
@@ -55,7 +53,6 @@ namespace ServerProgramm
                     break;
                 case 2:
                     await udp.SendQuizzesAsync(Quizzes);
-                    ListenClients();
                     break;
                 case 3:
                     await udp.ReceiveQuizzes();
@@ -73,11 +70,6 @@ namespace ServerProgramm
             clientPorts.AddOrUpdate(clientIdentifier, clientData.EndPoint.Port, (key, existingValue) => clientData.EndPoint.Port);
 
             Console.WriteLine($"Порт клиента сохранен: {clientData.EndPoint.Port}");
-
-            // Отправка ответа обратно клиенту
-            UdpClient udpClient = new UdpClient();
-            udpClient.Send(clientData.Data, clientData.Data.Length, clientData.EndPoint);
-            udpClient.Close();
         }
         class ClientData
         {
