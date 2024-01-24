@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +21,14 @@ namespace WpfApp27
     /// </summary>
     public partial class Create_EditQuiz : Window
     {
-        ApplicationViewModelQuiz viewModel;
-        public Create_EditQuiz(Quiz quiz)
+        ApplicationViewModelQuiz viewModel = new ApplicationViewModelQuiz() { };
+        int currentindex;
+        public Create_EditQuiz(ObservableCollection<Quiz> quizzes, int currentindex)
         {
             InitializeComponent();
-            DataContext  = quiz;
+            viewModel.Quizzes = quizzes;
+            this.currentindex = currentindex;
+            answerlist.ItemsSource = viewModel.Quizzes[currentindex].Questions;
         }
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
@@ -33,17 +38,28 @@ namespace WpfApp27
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            if (answerlist.SelectedIndex == -1) return;
+            viewModel.Quizzes[currentindex].Questions.Remove(viewModel.Quizzes[currentindex].Questions[answerlist.SelectedIndex]);
+            answerlist.ItemsSource = null;
+            answerlist.ItemsSource = viewModel.Quizzes[currentindex].Questions;
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-
+            answerlist.SelectedIndex = -1;
         }
 
         private void booklist_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
+            if (answerlist.SelectedIndex == -1) return;
+            AnswersEditWindow answersEdit = new AnswersEditWindow(viewModel.Quizzes, currentindex, answerlist.SelectedIndex);
+            answersEdit.Show();
+        }
 
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            TeacherWindow teacherWindow = new TeacherWindow(viewModel.Quizzes[currentindex].Teacher, viewModel.Quizzes);
+            teacherWindow.Show(); 
         }
     }
 }

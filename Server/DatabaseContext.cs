@@ -43,5 +43,12 @@ namespace ServerProgramm
                 connection.Execute($"UPDATE Users SET Loan = {loan}, TurnOver = {turnover}, BankAccount = {bankaccount} WHERE Id={id+1}");
             }
         }
+        public ObservableCollection<User> GetQuiz()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                return new ObservableCollection<User>(connection.Query<User>("SELECT * FROM Users").ToList());
+            }
+        }
     }
 }

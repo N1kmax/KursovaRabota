@@ -48,14 +48,14 @@ namespace ServerProgramm
                     await udp.SendUsersAsync(Users);
                     break;
                 case 1:
-                    await udp.ReceiveUsers();
+                    udp.ReceiveUsers();
                     ListenClients();
                     break;
                 case 2:
                     await udp.SendQuizzesAsync(Quizzes);
                     break;
                 case 3:
-                    await udp.ReceiveQuizzes();
+                    udp.ReceiveQuizzes();
                     ListenClients();
                     break;
             }
@@ -82,7 +82,7 @@ namespace ServerProgramm
         {
             foreach (var user in Users) 
             {
-                Console.WriteLine($"Name: {user.Login}");
+                Console.WriteLine($"Name: {user.Login} Paaword: {user.Password} Mail: {user.Mail} Usertype: {user.UserType}");
             }
         }
     }

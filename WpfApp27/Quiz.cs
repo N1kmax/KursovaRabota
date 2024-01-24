@@ -17,19 +17,17 @@ namespace WpfApp27
         public Dictionary<User, int[]> StudentsResults { get; set; }
         public List<byte[]> ImageList { get; set; }
         public User Teacher { get; set; }
-        public string StudentPassword { get; set; }
         public Quiz() 
         {
 
         }
-        public Quiz(string name, List<string> questions, List<List<string>> answers, List<List<string>> right_answer, Dictionary<User, int[]> StudentsResults, string TeacherName, string TeacherPassword, string StudentPassword)
+        public Quiz(string name, List<string> questions, List<List<string>> answers, List<List<string>> right_answer, Dictionary<User, int[]> StudentsResults, string TeacherName)
         {
             Name = name;
             Questions = questions;
             Answers = answers;
             Right_answer = right_answer;
             this.StudentsResults = StudentsResults;
-            this.StudentPassword = StudentPassword;
 
         }
     }

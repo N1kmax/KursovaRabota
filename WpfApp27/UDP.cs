@@ -62,20 +62,18 @@ namespace WpfApp27
             await udpClient.SendAsync(data, data.Length, endPoint);
           
         }
-        public async Task ReceiveUsers()
+        public void ReceiveUsers()
         {
             IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortReceive));
             byte[] receivedData = udpClient.Receive(ref clientEndPoint);
-            MessageBox.Show($"{Encoding.UTF8.GetString(receivedData)}");
+            MessageBox.Show(Encoding.UTF8.GetString(receivedData));
             users = Deserialize<ObservableCollection<User>>(receivedData);
         }
-        public async Task ReceiveQuizzes()
+        public void ReceiveQuizzes()
         {
             IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
             byte[] receivedData = udpClient.Receive(ref clientEndPoint);
-            
             quizzes = Deserialize<ObservableCollection<Quiz>>(receivedData);
-            MessageBox.Show(users[0].Login);
         }
         static T Deserialize<T>(byte[] data)
         {

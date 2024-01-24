@@ -23,15 +23,6 @@ namespace WpfApp27
                 OnPropetyChnaged("Login");
             } 
         }
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                password = value;
-                OnPropetyChnaged("Password");
-            }
-        }
         public string Mail
         {
             get { return mail; }
@@ -41,6 +32,16 @@ namespace WpfApp27
                 OnPropetyChnaged("Mail");
             }
         }
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropetyChnaged("Password");
+            }
+        }
+        
         public string UserType
         {
             get { return usertype; }

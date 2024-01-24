@@ -78,7 +78,7 @@ namespace ServerProgramm
         string jsonString = Encoding.UTF8.GetString(data);
         return JsonConvert.DeserializeObject<T>(jsonString);
     }
-        public async Task ReceiveUsers()
+        public void ReceiveUsers()
         {
             using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {
@@ -88,7 +88,7 @@ namespace ServerProgramm
             }
             Console.WriteLine("Data was added");
         }
-        public async Task ReceiveQuizzes()
+        public void ReceiveQuizzes()
         {
             using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
             {

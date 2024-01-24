@@ -52,7 +52,7 @@
             <TabItem Name="quizzes" Header="Results" Height="210" VerticalAlignment="Top">
                 <Border>
                     <StackPanel>
-                        <ListBox x:Name="Quizzes" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="QuizzesChanged">
+                        <ListBox x:Name="Quizzes" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="1,0,1,1" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="QuizzesChanged" BorderBrush="White" BorderThickness="1,0,1,1">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="5">

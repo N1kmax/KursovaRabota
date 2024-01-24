@@ -33,7 +33,11 @@ namespace WpfApp27
         {
             InitializeComponent();
             client = new Client();
-            
+            /*
+            client.SendMessage("0");
+            users = client.GetUsers();
+            */
+
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -65,12 +69,12 @@ namespace WpfApp27
                     {
                         if (users[x].UserType == "Student")
                         {
-                            StudentWindow student = new StudentWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, StudentPassword = "Math", Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                            StudentWindow student = new StudentWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
                             student.Show();
                         }
                         if (users[x].UserType == "Teacher") 
                         {
-                            TeacherWindow teacherWindow = new TeacherWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, StudentPassword = "Math", Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                            TeacherWindow teacherWindow = new TeacherWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
                             teacherWindow.Show();
                         }
                         this.Close();
@@ -91,7 +95,7 @@ namespace WpfApp27
                         users.Add(new User {Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Teacher"});
                     if (Student.IsChecked == true)
                         users.Add(new User { Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Student"});
-                    StudentWindow student = new StudentWindow(users[users.Count-1], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, StudentPassword = "Math", Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                    StudentWindow student = new StudentWindow(users[users.Count-1], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
                     student.Show();
                     
                 }

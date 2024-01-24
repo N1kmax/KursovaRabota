@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp27"
         mc:Ignorable="d"
-        Title="Create_EditQuiz" Height="500" Width="400">
+        Title="Create_EditQuiz" Height="500" Width="400" Closing="Window_Closing" Background="#FF282835">
     <Window.Resources>
         <Style TargetType="Border">
             <Setter Property="Background" Value="#FF282835"/>
@@ -22,6 +22,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Foreground" Value="#FFAEAEAE" />
             <Setter Property="Background" Value="#FF535151"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -32,17 +33,17 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <ListBox x:Name="booklist" Grid.Column="0" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" Height="306" VerticalAlignment="Top" Margin="0,55,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" BorderBrush="Black"  SelectionChanged="booklist_SelectionChanged_1" BorderThickness="0,1,0,1">
+        <ListBox x:Name="answerlist" Grid.Column="0"  Height="306" VerticalAlignment="Top" Margin="0,55,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" Foreground="#FFAEAEAE" BorderBrush="#FFAEAEAE" Background="#FF282835"  SelectionChanged="booklist_SelectionChanged_1" BorderThickness="0,1,0,1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="20" Text="{Binding Path=quiz.Question}"/>
+                        <TextBlock FontSize="20" Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Questions" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Height="56" Width="400" FontSize="35" HorizontalContentAlignment="Center"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="10,366,0,0" VerticalAlignment="Top" Foreground="Black" Click="Button_Click_6" Width="70" Height="27" BorderBrush="Black"/>
+        <Label Content="Questions" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Height="56" Width="400" FontSize="35" Foreground="#FFAEAEAE" HorizontalContentAlignment="Center"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="10,366,0,0" VerticalAlignment="Top" Click="Button_Click_6" Width="70" Height="27" BorderBrush="Black"/>
         <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,398,0,0" Click="Button_Click_3"  BorderBrush="Black" Height="26" Width="70"/>
         <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,429,0,0" Click="Button_Click_4"  BorderBrush="Black" Height="26" Width="70"/>
     </Grid>

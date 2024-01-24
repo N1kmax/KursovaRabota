@@ -67,7 +67,7 @@ namespace WpfApp27
 
         private void AnswerButton_Click(object sender, RoutedEventArgs e)
         {
-            bool check = false; ;
+            bool check = false; 
             ObservableCollection<string> selectedAnswers = new ObservableCollection<string>();
 
             foreach (var item in answersItemsControl.Items)
@@ -75,7 +75,6 @@ namespace WpfApp27
                 var container = answersItemsControl.ItemContainerGenerator.ContainerFromItem(item) as FrameworkElement;
                 if (container != null)
                 {
-                    // В этом примере предполагается, что CheckBox является дочерним элементом каждого контейнера
                     var checkBox = FindChild<CheckBox>(container);
 
                     if (checkBox != null && checkBox.Content is string answer && checkBox.IsChecked == true)

@@ -26,12 +26,12 @@ namespace WpfApp27
         {
             return users;
         }
-        public async void SendMessage(string message)
+        public void SendMessage(string message)
         {
             action = int.Parse(message);
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(udp.Ip), int.Parse(udp.PortSend));
             byte[] data = Encoding.UTF8.GetBytes(message);
-            await udp.udpClient.SendAsync(data, data.Length, endPoint);
+            udp.udpClient.SendAsync(data, data.Length, endPoint);
             ListenServer();
         }
         public async void ListenServer()
@@ -39,10 +39,11 @@ namespace WpfApp27
             switch (action) 
             {
                 case 0:
-                    await udp.ReceiveUsers();
+                    udp.ReceiveUsers();
+                    Set();
                     break;
                 case 2:
-                    await udp.ReceiveQuizzes();
+                    udp.ReceiveQuizzes();
                     break;
 
             }

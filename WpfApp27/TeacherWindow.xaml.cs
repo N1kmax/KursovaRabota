@@ -22,13 +22,15 @@ namespace WpfApp27
     /// </summary>
     public partial class TeacherWindow : Window
     {
-        ApplicationViewModelQuiz viewModel = new ApplicationViewModelQuiz();
+        ApplicationViewModelQuiz viewModel;
+        ApplicationViewModelQuiz viewModel1;
         User User;
         public TeacherWindow(User user, ObservableCollection<Quiz> quizzes)
         {
             InitializeComponent();
-            ApplicationViewModelQuiz viewModel1 = new ApplicationViewModelQuiz();
             User = user;
+            viewModel = new ApplicationViewModelQuiz();
+            viewModel1 = new ApplicationViewModelQuiz();
             viewModel.Quizzes = quizzes;
             var v = from quiz in viewModel.Quizzes
                     where quiz.Teacher.Login == user.Login
@@ -40,7 +42,8 @@ namespace WpfApp27
         private void CreationButton_Click(object sender, RoutedEventArgs e)
         {
             if (CreationNameQuizTextBox.Text.Replace(" ", "") == "" || CreationStudentPasswordTextBox.Text.Replace(" ","") == "" || CreationNameQuizTextBox.Text.Replace(" ","").Length > 30 || CreationNameQuizTextBox.Text.Replace(" ","").Length <3 && CreationStudentPasswordTextBox.Text.Replace(" ","").Length < 7 && CreationStudentPasswordTextBox.Text.Replace(" ", "").Length > 17) return;
-            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(new Quiz { Name = CreationNameQuizTextBox.Text, Teacher = User, Questions = new List<string>() { }, Answers = new List<List<string>>() { }, Right_answer = new List<List<string>>() { }, StudentPassword = CreationStudentPasswordTextBox.Text });
+            viewModel.Quizzes.Add(new Quiz { Name = CreationNameQuizTextBox.Text, Teacher = User, Questions = new List<string>() { }, Answers = new List<List<string>>() { }, Right_answer = new List<List<string>>() { } });
+            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(viewModel.Quizzes, viewModel.Quizzes.Count-1);
             create_EditQuiz.Show();
             this.Close();
         }
@@ -53,12 +56,16 @@ namespace WpfApp27
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             if (Quiz.SelectedIndex == -1) return;
-            viewModel.Quizzes.Remove(viewModel.Quizzes[Quiz.SelectedIndex]);
+            viewModel1.Quizzes.Remove(viewModel.Quizzes[Quiz.SelectedIndex]);
+            
         }
 
         private void EditQuizButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(Quiz.SelectedIndex == -1) return;
+            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(viewModel.Quizzes, Quiz.SelectedIndex);
+            create_EditQuiz.Show();
+            this.Close();
         }
     }
 }
