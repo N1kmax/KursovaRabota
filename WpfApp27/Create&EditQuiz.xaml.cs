@@ -23,11 +23,13 @@ namespace WpfApp27
     {
         ApplicationViewModelQuiz viewModel = new ApplicationViewModelQuiz() { };
         int currentindex;
-        public Create_EditQuiz(ObservableCollection<Quiz> quizzes, int currentindex)
+        Client client;
+        public Create_EditQuiz(Client client,ObservableCollection<Quiz> quizzes, int currentindex)
         {
             InitializeComponent();
             viewModel.Quizzes = quizzes;
             this.currentindex = currentindex;
+            this.client = client;
             answerlist.ItemsSource = viewModel.Quizzes[currentindex].Questions;
         }
 
@@ -58,7 +60,7 @@ namespace WpfApp27
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            TeacherWindow teacherWindow = new TeacherWindow(viewModel.Quizzes[currentindex].Teacher, viewModel.Quizzes);
+            TeacherWindow teacherWindow = new TeacherWindow(client, viewModel.Quizzes[currentindex].Teacher, viewModel.Quizzes);
             teacherWindow.Show(); 
         }
     }

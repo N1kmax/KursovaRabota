@@ -22,12 +22,14 @@ namespace WpfApp27
     {
         ApplicationViewModelQuiz viewModel = new ApplicationViewModelQuiz();
         User user;
-        public StudentWindow(User user, ObservableCollection<Quiz> quizzes)
+        Client client;
+        public StudentWindow(Client client, User user, ObservableCollection<Quiz> quizzes)
         {
             InitializeComponent();
             this.user = user;
             viewModel.Quizzes = quizzes;
             DataContext = viewModel;
+            this.client = client;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -67,7 +69,7 @@ namespace WpfApp27
             }
             if (check)
             {
-                quizWindow quizWindow = new quizWindow(viewModel.SelectedQuiz, user);
+                quizWindow quizWindow = new quizWindow(client, viewModel.SelectedQuiz, user);
                 quizWindow.Show();
                 this.Close();
             }

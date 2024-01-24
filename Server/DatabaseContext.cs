@@ -43,11 +43,20 @@ namespace ServerProgramm
                 connection.Execute($"UPDATE Users SET Loan = {loan}, TurnOver = {turnover}, BankAccount = {bankaccount} WHERE Id={id+1}");
             }
         }
-        public ObservableCollection<User> GetQuiz()
+        public void AddQuiz(Quiz quiz) 
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                return new ObservableCollection<User>(connection.Query<User>("SELECT * FROM Users").ToList());
+                connection.Execute("INSERT INTO Quizzes (Name, PhoneNumber, CardNumber, BankAccount, TurnOver, Loan, Date, Currency, TypeOfCard) VALUES (@Name, @PhoneNumber, @CardNumber, @BankAccount, @TurnOver, @Loan, @Date, @Currency, @TypeOfCard)", quiz);
+            }
+        }
+        public ObservableCollection<Quiz> GetQuiz()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                ObservableCollection<Quiz> values = new ObservableCollection<Quiz>(connection.Query<Quiz>("SELECT * FROM Quizzes").ToList());
+                
+                return values;
             }
         }
     }

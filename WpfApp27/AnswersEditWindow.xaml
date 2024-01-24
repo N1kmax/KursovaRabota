@@ -46,7 +46,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black" Click="Button_Click"/>
-                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
+                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_1"/>
                 <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
             </StackPanel>
         </Border>
@@ -63,13 +63,13 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black"/>
-                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
+                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_2"/>
                 <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
             </StackPanel>
         </Border>
         <Border>
             <WrapPanel>
-                <Label Content="Question panel" HorizontalAlignment="Center" Width="400" Foreground="#FFAEAEAE" HorizontalContentAlignment="Center"/>
+                <Label Content="Question panel" HorizontalAlignment="Center" Width="400" Foreground="#FFAEAEAE" HorizontalContentAlignment="Center" FontSize="35"/>
                 <Label Content="Question" Margin="0,0,1,1" Foreground="#FFAEAEAE"/>
                 <TextBox Width="100" Foreground="#FFAEAEAE"/>
             </WrapPanel>

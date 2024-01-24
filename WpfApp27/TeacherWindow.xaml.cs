@@ -25,7 +25,8 @@ namespace WpfApp27
         ApplicationViewModelQuiz viewModel;
         ApplicationViewModelQuiz viewModel1;
         User User;
-        public TeacherWindow(User user, ObservableCollection<Quiz> quizzes)
+        Client client;
+        public TeacherWindow(Client client, User user, ObservableCollection<Quiz> quizzes)
         {
             InitializeComponent();
             User = user;
@@ -37,13 +38,14 @@ namespace WpfApp27
                     select quiz;
             viewModel1.Quizzes = new ObservableCollection<Quiz>(v.ToList());
             DataContext = viewModel1;
+            this.client = client;
         }
 
         private void CreationButton_Click(object sender, RoutedEventArgs e)
         {
             if (CreationNameQuizTextBox.Text.Replace(" ", "") == "" || CreationStudentPasswordTextBox.Text.Replace(" ","") == "" || CreationNameQuizTextBox.Text.Replace(" ","").Length > 30 || CreationNameQuizTextBox.Text.Replace(" ","").Length <3 && CreationStudentPasswordTextBox.Text.Replace(" ","").Length < 7 && CreationStudentPasswordTextBox.Text.Replace(" ", "").Length > 17) return;
             viewModel.Quizzes.Add(new Quiz { Name = CreationNameQuizTextBox.Text, Teacher = User, Questions = new List<string>() { }, Answers = new List<List<string>>() { }, Right_answer = new List<List<string>>() { } });
-            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(viewModel.Quizzes, viewModel.Quizzes.Count-1);
+            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(client,viewModel.Quizzes, viewModel.Quizzes.Count-1);
             create_EditQuiz.Show();
             this.Close();
         }
@@ -63,7 +65,7 @@ namespace WpfApp27
         private void EditQuizButton_Click(object sender, RoutedEventArgs e)
         {
             if(Quiz.SelectedIndex == -1) return;
-            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(viewModel.Quizzes, Quiz.SelectedIndex);
+            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(client, viewModel.Quizzes, Quiz.SelectedIndex);
             create_EditQuiz.Show();
             this.Close();
         }

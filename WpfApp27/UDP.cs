@@ -16,10 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
+
 
 namespace WpfApp27
 {
@@ -66,7 +63,6 @@ namespace WpfApp27
         {
             IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortReceive));
             byte[] receivedData = udpClient.Receive(ref clientEndPoint);
-            MessageBox.Show(Encoding.UTF8.GetString(receivedData));
             users = Deserialize<ObservableCollection<User>>(receivedData);
         }
         public void ReceiveQuizzes()
@@ -92,7 +88,6 @@ namespace WpfApp27
         }
         public ObservableCollection<User> GetUsers()
         {
-            MessageBox.Show(users[0].Login);
             return users;
         }
         static string GetLocalIPAddress()

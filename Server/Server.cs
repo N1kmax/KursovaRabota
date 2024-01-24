@@ -13,6 +13,7 @@ namespace ServerProgramm
     public class Server
     {
         public UDP udp { get; set; }
+        public bool gotmessage;
         DatabaseContext db;
         private static ConcurrentDictionary<string, int> clientPorts = new ConcurrentDictionary<string, int>();
         public ObservableCollection<User> Users { get; set; }
@@ -20,10 +21,10 @@ namespace ServerProgramm
         int action;
         public Server()
         {
-            udp = new UDP("5000","5000");
+            udp = new UDP("1000","5000");
             db = new DatabaseContext();
             Users = db.GetUsers();
-
+            Quizzes = db.GetQuiz();
         } 
         public void ListenClients() 
         {
@@ -32,10 +33,11 @@ namespace ServerProgramm
         }
         public async void StartServer() 
         {
+            gotmessage = false;
             var result = await udp.server.ReceiveAsync();
             Console.WriteLine(Encoding.UTF8.GetString(result.Buffer));
             action = int.Parse(Encoding.UTF8.GetString(result.Buffer));
-            await Task.Run(() => ProcessClient(new ClientData { EndPoint = result.RemoteEndPoint, Data = result.Buffer }));
+            Task.Run(() => ProcessClient(new ClientData { EndPoint = result.RemoteEndPoint, Data = result.Buffer }));
             Console.WriteLine(result.RemoteEndPoint.Port.ToString());
             udp.SetPoint(result.RemoteEndPoint.Address.ToString(),result.RemoteEndPoint.Port.ToString());
             Chooseaction(action);
@@ -45,16 +47,20 @@ namespace ServerProgramm
             switch (action) 
             {
                 case 0:
+                    gotmessage = true;
                     await udp.SendUsersAsync(Users);
                     break;
                 case 1:
+                    gotmessage = true;
                     udp.ReceiveUsers();
                     ListenClients();
                     break;
                 case 2:
+                    gotmessage = true;
                     await udp.SendQuizzesAsync(Quizzes);
                     break;
                 case 3:
+                    gotmessage = true;
                     udp.ReceiveQuizzes();
                     ListenClients();
                     break;
@@ -83,6 +89,14 @@ namespace ServerProgramm
             foreach (var user in Users) 
             {
                 Console.WriteLine($"Name: {user.Login} Paaword: {user.Password} Mail: {user.Mail} Usertype: {user.UserType}");
+            }
+        }
+        public void ShowQuizzes() 
+        {
+            Console.WriteLine($"count {Quizzes.Count}");
+            foreach (var quiz in Quizzes) 
+            {
+                Console.WriteLine($"Name: {quiz.Name}, Teacher: {quiz.Teacher}");
             }
         }
     }

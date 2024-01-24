@@ -24,7 +24,7 @@ namespace WpfApp27
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<User> users = new ObservableCollection<User>() { new User {Login = "qwe", Mail= "qwe", Password="qwe", UserType="Student" }, new User { Login = "Mr. Math", Mail= "qwe", Password="qwe", UserType="Teacher" } };
+        ObservableCollection<User> users;
         Client client;
         
         int x;
@@ -33,10 +33,8 @@ namespace WpfApp27
         {
             InitializeComponent();
             client = new Client();
-            /*
             client.SendMessage("0");
             users = client.GetUsers();
-            */
 
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -67,23 +65,27 @@ namespace WpfApp27
                         }
                     if (check)
                     {
-                        if (users[x].UserType == "Student")
-                        {
-                            StudentWindow student = new StudentWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
-                            student.Show();
-                        }
-                        if (users[x].UserType == "Teacher") 
-                        {
-                            TeacherWindow teacherWindow = new TeacherWindow(users[x], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
-                            teacherWindow.Show();
-                        }
-                        this.Close();
+                        openWindow(users[x]);
                     }
                     else
                         MessageBox.Show("User name or password isn't right");
             }
             else
                 MessageBox.Show("You should fill all filds");
+        }
+        private void openWindow(User user) 
+        {
+            if (users[x].UserType == "Student")
+            {
+                StudentWindow student = new StudentWindow(client, user, new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                student.Show();
+            }
+            if (users[x].UserType == "Teacher")
+            {
+                TeacherWindow teacherWindow = new TeacherWindow(client, user, new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                teacherWindow.Show();
+            }
+            this.Close();
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -95,9 +97,7 @@ namespace WpfApp27
                         users.Add(new User {Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Teacher"});
                     if (Student.IsChecked == true)
                         users.Add(new User { Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Student"});
-                    StudentWindow student = new StudentWindow(users[users.Count-1], new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
-                    student.Show();
-                    
+                    openWindow(users[users.Count-1]);
                 }
                 catch (Exception ex)
                 {

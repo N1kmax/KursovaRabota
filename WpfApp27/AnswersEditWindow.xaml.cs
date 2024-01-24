@@ -32,6 +32,19 @@ namespace WpfApp27
             rightanswerlist.ItemsSource  =viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion];
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (answerlist.SelectedIndex == -1) return;
+            viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion].Remove(viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion][answerlist.SelectedIndex]);
+            answerlist.ItemsSource = null;
+            answerlist.ItemsSource = viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion];
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 

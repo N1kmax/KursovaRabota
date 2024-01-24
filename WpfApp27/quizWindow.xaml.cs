@@ -24,11 +24,13 @@ namespace WpfApp27
         private int CorrectAnswersCount = 0;
         Quiz quiz;
         User user;
-        public quizWindow(Quiz quiz, User user)
+        Client client;
+        public quizWindow(Client client, Quiz quiz, User user)
         {
             InitializeComponent();
             this.quiz = quiz;
             this.user = user;
+            this.client = client;
             LoadQuestion();
         }
 
@@ -58,7 +60,7 @@ namespace WpfApp27
                         quiz.StudentsResults[user][2] = CorrectAnswersCount;
                 }
                 MessageBox.Show($"Correct answers: {CorrectAnswersCount}/{quiz.Questions.Count}");
-                StudentWindow student = new StudentWindow(user, new ObservableCollection<Quiz>() {quiz });
+                StudentWindow student = new StudentWindow(client, user, new ObservableCollection<Quiz>() {quiz });
                 student.Show();
                 this.Close();
             }
