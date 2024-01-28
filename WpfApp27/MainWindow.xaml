@@ -91,7 +91,7 @@ VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0"
             </WrapPanel>
         </Border>
         <Border>
-            <Image Grid.Column="0"/>
+            <Image  Source="Resources/quiz-icon.webp"/>
         </Border>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width = "1*"/>
