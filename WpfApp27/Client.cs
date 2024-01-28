@@ -15,7 +15,7 @@ namespace WpfApp27
         public User User { get; set; }
         int action;
         UDP udp { get; set; }
-        public ObservableCollection<Quiz> quizzes { get; set; }
+        ObservableCollection<Quiz> quizzes { get; set; }
         ObservableCollection<User> users { get; set; }
         public Client()
         {
@@ -24,6 +24,14 @@ namespace WpfApp27
         public ObservableCollection<User> GetUsers()
         {
             return users;
+        }
+        public void SetQuizzes(ObservableCollection<Quiz> quizzes) 
+        {
+            this.quizzes = quizzes;
+        }
+        public ObservableCollection <Quiz> GetQuizzes() 
+        {
+            return quizzes;
         }
         public void SendMessage(string message)
         {
@@ -41,8 +49,15 @@ namespace WpfApp27
                     udp.ReceiveUsers();
                     Set();
                     break;
+                case 1:
+                    await udp.SendUsersAsync(users);
+                    break;
                 case 2:
                     udp.ReceiveQuizzes();
+                    Set();
+                    break;
+                case 3:
+                    await udp.SendQuizzesAsync(quizzes);
                     break;
 
             }

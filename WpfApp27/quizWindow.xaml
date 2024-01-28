@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp27"
         mc:Ignorable="d"
-        Title="quizWindow" Height="300" Width="200" Background="#FF282835">
+        Title="quizWindow" Height="450" Width="400" Background="#FF282835" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">

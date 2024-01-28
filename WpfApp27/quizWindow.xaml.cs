@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,16 @@ namespace WpfApp27
     {
         private int currentQuestionIndex;
         private int CorrectAnswersCount = 0;
-        Quiz quiz;
+        int CurrentIndex;
+        ApplicationViewModelQuiz quizzes;
         User user;
         Client client;
-        public quizWindow(Client client, Quiz quiz, User user)
+        public quizWindow(Client client, ApplicationViewModelQuiz quizzes, int CurrentIndex, User user)
         {
             InitializeComponent();
-            this.quiz = quiz;
+            this.quizzes = quizzes;
             this.user = user;
+            this.CurrentIndex = CurrentIndex;
             this.client = client;
             LoadQuestion();
         }
@@ -37,31 +40,15 @@ namespace WpfApp27
 
         private void LoadQuestion()
         {
-            if (currentQuestionIndex < quiz.Questions.Count)
+            if (currentQuestionIndex < quizzes.Quizzes[CurrentIndex].Questions.Count)
             {
-                string currentQuestion = quiz.Questions[currentQuestionIndex];
+                string currentQuestion = quizzes.Quizzes[CurrentIndex].Questions[currentQuestionIndex];
                 questionTextBlock.Text = currentQuestion;
-                answersItemsControl.ItemsSource = quiz.Answers[currentQuestionIndex];
+                answersItemsControl.ItemsSource = quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex];
             }
             else
             {
-                if (!quiz.StudentsResults.ContainsKey(user))
-                {
-                    quiz.StudentsResults.Add(user, new int[3]);
-                    for (int i = 0; i < 3; i++)
-                        quiz.StudentsResults[user][i] = -1;
-                    quiz.StudentsResults[user][0] = CorrectAnswersCount;
-                }
-                else
-                {
-                    if (quiz.StudentsResults[user][1]==-1)
-                        quiz.StudentsResults[user][1] = CorrectAnswersCount;
-                    else
-                        quiz.StudentsResults[user][2] = CorrectAnswersCount;
-                }
-                MessageBox.Show($"Correct answers: {CorrectAnswersCount}/{quiz.Questions.Count}");
-                StudentWindow student = new StudentWindow(client, user, new ObservableCollection<Quiz>() {quiz });
-                student.Show();
+                
                 this.Close();
             }
 
@@ -85,12 +72,12 @@ namespace WpfApp27
                     }
                 }
             }
-            if (selectedAnswers.Count==quiz.Right_answer[currentQuestionIndex].Count)
+            if (selectedAnswers.Count==quizzes.Quizzes[CurrentIndex].Right_answer[currentQuestionIndex].Count)
             {
                 check =true;
-                for (int j = 0; j<quiz.Right_answer[currentQuestionIndex].Count; j++)
+                for (int j = 0; j<quizzes.Quizzes[CurrentIndex].Right_answer[currentQuestionIndex].Count; j++)
                 {
-                    if (selectedAnswers.OrderBy(n => n).ToList()[j]!=quiz.Right_answer[currentQuestionIndex].OrderBy(n => n).ToList()[j])
+                    if (selectedAnswers.OrderBy(n => n).ToList()[j]!=quizzes.Quizzes[CurrentIndex].Right_answer[currentQuestionIndex].OrderBy(n => n).ToList()[j])
                     {
                         check= false;
                         break;
@@ -104,8 +91,6 @@ namespace WpfApp27
             }
             else
                 MessageBox.Show("You match wrong answer");
-
-            // Переход к следующему вопросу
             currentQuestionIndex++;
             LoadQuestion();
         }
@@ -130,6 +115,27 @@ namespace WpfApp27
             }
 
             return null;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!quizzes.Quizzes[CurrentIndex].StudentsResults.ContainsKey(user.Login))
+            {
+                quizzes.Quizzes[CurrentIndex].StudentsResults.Add( user.Login, new int[3]);
+                for (int i = 0; i < 3; i++)
+                    quizzes.Quizzes[CurrentIndex].StudentsResults[user.Login][i] = -1;
+                quizzes.Quizzes[CurrentIndex].StudentsResults[user.Login][0] = CorrectAnswersCount;
+            }
+            else
+            {
+                if (quizzes.Quizzes[CurrentIndex].StudentsResults[user.Login][1]==-1)
+                    quizzes.Quizzes[CurrentIndex].StudentsResults[user.Login][1] = CorrectAnswersCount;
+                else
+                    quizzes.Quizzes[CurrentIndex].StudentsResults[user.Login][2] = CorrectAnswersCount;
+            }
+            MessageBox.Show($"Correct answers: {CorrectAnswersCount}/{quizzes.Quizzes[CurrentIndex].Questions.Count}");
+            StudentWindow student = new StudentWindow(client, user, quizzes);
+            student.Show();        
         }
     }
 

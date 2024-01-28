@@ -46,12 +46,11 @@ namespace ServerProgramm
             {
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-                
-
+                await Console.Out.WriteLineAsync(endPoint.ToString());
                 byte[] data = Serialize(quizzes);
 
                 await udpClient.SendAsync(data, data.Length, endPoint);
-                
+                Console.WriteLine("Data was sended");
             }
         }
 
@@ -74,28 +73,22 @@ namespace ServerProgramm
             return Encoding.UTF8.GetBytes(jsonString);
         }
         static T Deserialize<T>(byte[] data)
-    {
-        string jsonString = Encoding.UTF8.GetString(data);
-        return JsonConvert.DeserializeObject<T>(jsonString);
-    }
+        {
+            string jsonString = Encoding.UTF8.GetString(data);
+            return JsonConvert.DeserializeObject<T>(jsonString);
+        }
         public void ReceiveUsers()
         {
-            using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
-            {
-                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
-                byte[] receivedData = recriver.Receive(ref clientEndPoint);
-                this.users= Deserialize<ObservableCollection<User>>(receivedData);
-            }
+            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortReceive));
+            byte[] receivedData = server.Receive(ref clientEndPoint);
+            users = Deserialize<ObservableCollection<User>>(receivedData);
             Console.WriteLine("Data was added");
         }
         public void ReceiveQuizzes()
         {
-            using (UdpClient recriver = new UdpClient(int.Parse(PortReceive)))
-            {
-                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), 0);
-                byte[] receivedData = recriver.Receive(ref clientEndPoint);
-                this.quizzes= Deserialize<ObservableCollection<Quiz>>(receivedData);
-            }
+            IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortReceive));
+            byte[] receivedData = server.Receive(ref clientEndPoint);
+            quizzes = Deserialize<ObservableCollection<Quiz>>(receivedData);
             Console.WriteLine("Data was added");
         }
         

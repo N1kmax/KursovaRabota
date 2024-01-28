@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ServerProgramm
@@ -24,7 +26,7 @@ namespace ServerProgramm
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Execute("INSERT INTO Users (Name, PhoneNumber, CardNumber, BankAccount, TurnOver, Loan, Date, Currency, TypeOfCard) VALUES (@Name, @PhoneNumber, @CardNumber, @BankAccount, @TurnOver, @Loan, @Date, @Currency, @TypeOfCard)", user);
+                connection.Execute("INSERT INTO Users (Login, Mail, Password, Usertype) VALUES (@Login, @Mail, @Password, @Usertype)", user);
             }
         }
 
@@ -50,12 +52,27 @@ namespace ServerProgramm
                 connection.Execute("INSERT INTO Quizzes (Name, PhoneNumber, CardNumber, BankAccount, TurnOver, Loan, Date, Currency, TypeOfCard) VALUES (@Name, @PhoneNumber, @CardNumber, @BankAccount, @TurnOver, @Loan, @Date, @Currency, @TypeOfCard)", quiz);
             }
         }
+        public void SaveQuiz(ObservableCollection<Quiz> quizzes) 
+        {
+            string str;
+            using (var connection = new SqlConnection(connectionString)) 
+            {
+                connection.Execute("TRUNCATE TABLE Quizzes");
+                foreach (var quiz in quizzes) 
+                {
+                    str = JsonSerializer.Serialize(quiz);
+                    connection.Execute($"INSERT INTO Quizzes(Quiz) VALUES ('{str}')");
+                }
+            }
+        }
         public ObservableCollection<Quiz> GetQuiz()
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                ObservableCollection<Quiz> values = new ObservableCollection<Quiz>(connection.Query<Quiz>("SELECT * FROM Quizzes").ToList());
-                
+                ObservableCollection<Quiz> values = new ObservableCollection<Quiz>() { };
+                List<string> quizj = connection.Query<string>("Select Quiz FROM Quizzes").ToList();
+                foreach (string quiz in quizj)
+                    values.Add(JsonSerializer.Deserialize<Quiz>(quiz));
                 return values;
             }
         }

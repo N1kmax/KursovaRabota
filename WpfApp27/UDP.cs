@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows;
 
 
 namespace WpfApp27
@@ -44,20 +45,15 @@ namespace WpfApp27
         {
 
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-
             byte[] data = Serialize(quizzes);
-
             await udpClient.SendAsync(data, data.Length, endPoint);
         }
         public async Task SendUsersAsync(ObservableCollection<User> users)
         {
 
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(Ip), int.Parse(PortSend));
-
             byte[] data = Serialize(users);
-
             await udpClient.SendAsync(data, data.Length, endPoint);
-          
         }
         public void ReceiveUsers()
         {

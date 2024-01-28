@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp27"
         mc:Ignorable="d"
-        Title="StudentWindow" Height="450" Width="800">
+        Title="StudentWindow" Height="450" Width="800" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="Border">
             <Setter Property="Background" Value="#FF282835"/>

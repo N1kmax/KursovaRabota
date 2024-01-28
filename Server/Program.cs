@@ -21,9 +21,7 @@ namespace ServerProgramm
         {
 
             Server server = new Server();
-            server.Quizzes = new ObservableCollection<Quiz>() { };
             server.ShowUsers();
-            server.ShowQuizzes();
             while (true) 
             {
                 try

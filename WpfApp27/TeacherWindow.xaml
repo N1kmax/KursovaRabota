@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:WpfApp27"
         mc:Ignorable="d"
-        Title="TeacherWindow" Height="450" Width="800">
+        Title="TeacherWindow" Height="450" Width="800" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -43,8 +43,6 @@
                         <TextBlock Text="Create a quiz" Margin="10" HorizontalAlignment="Center" FontSize="30" Foreground="#FFAEAEAE"/>
                         <TextBox x:Name="CreationNameQuizTextBox" HorizontalAlignment="Center" Width="400"
                          materialDesign:HintAssist.Hint="Enter quiz name" Margin="10" Foreground="#FFAEAEAE"/>
-                        <TextBox x:Name="CreationStudentPasswordTextBox" HorizontalAlignment="Center" Width="400"
-                         materialDesign:HintAssist.Hint="Enter password for students" Margin="10" Foreground="#FFAEAEAE"/>
                         <Button x:Name="CreationButton" Content="Create" HorizontalAlignment="Center"
                          Width="200" Height="40" Margin="10" Background="#FF525153" Click="CreationButton_Click"/>
                     </StackPanel>

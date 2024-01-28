@@ -28,7 +28,7 @@ namespace WpfApp27
             get { return mail; }
             set
             {
-                password = value;
+                mail = value;
                 OnPropetyChnaged("Mail");
             }
         }

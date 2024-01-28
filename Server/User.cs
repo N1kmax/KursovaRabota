@@ -25,7 +25,7 @@ namespace ServerProgramm
             get { return mail; }
             set
             {
-                password = value;
+                mail = value;
             }
         }
         public string Password

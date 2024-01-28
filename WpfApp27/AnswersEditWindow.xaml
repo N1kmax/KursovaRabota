@@ -33,10 +33,10 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Border BorderThickness="0,0,1,0" Grid.Column="1" BorderBrush="#FFAEAEAE">
+        <Border BorderThickness="0,0,1,0" Grid.Column="0" BorderBrush="#FFAEAEAE">
             <StackPanel>
                 <Label Content="All answers" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="#FFAEAEAE" VerticalAlignment="Top" Height="56" Width="400" FontSize="35" HorizontalContentAlignment="Center"/>
-                <ListBox x:Name="answerlist" Grid.Column="0"  Height="306" VerticalAlignment="Top" Margin="0,0,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" BorderBrush="#FFAEAEAE" BorderThickness="0,1,1,1">
+                <ListBox x:Name="answerlist" Grid.Column="0"  Height="306" VerticalAlignment="Top" Margin="0,0,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" BorderBrush="#FFAEAEAE" BorderThickness="0,1,1,1" SelectionChanged="answerlist_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="5">
@@ -45,12 +45,17 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black" Click="Button_Click"/>
-                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_1"/>
-                <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
+                <WrapPanel>
+                    <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black" Click="Button_Click"/>
+                    <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_1"/>
+                    <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,150,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_4"/>
+                    <Label Content="Answer:"  VerticalAlignment="Center" Margin="0,13,5,0" Foreground="#FFAEAEAE" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="AnswerBox" Width="100" Foreground="#FFAEAEAE" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="14"/>
+                    <Button Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_5"/>
+                </WrapPanel>
             </StackPanel>
         </Border>
-        <Border Grid.Column="2">
+        <Border Grid.Column="1">
             <StackPanel>
                 <Label Content="Right answers" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="#FFAEAEAE" VerticalAlignment="Top" Height="56" Width="400" FontSize="35" HorizontalContentAlignment="Center"/>
                 <ListBox x:Name="rightanswerlist" Grid.Column="0"  Height="306" VerticalAlignment="Top" Margin="0,0,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" BorderBrush="#FFAEAEAE" BorderThickness="0,1,1,1">
@@ -62,20 +67,18 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black"/>
-                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_2"/>
-                <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70"/>
+                <WrapPanel>
+                    <Button Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black" Click="Button_Click_6"/>
+                    <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_2"/>
+                    <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,150,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_3"/>
+                    <Label Content="Right answer:"  VerticalAlignment="Center" Margin="0,13,5,0" Foreground="#FFAEAEAE" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="RightAnswerBox" Width="100" Foreground="#FFAEAEAE" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="14"/>
+                    <Button Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_7"/>
+                </WrapPanel>
             </StackPanel>
         </Border>
-        <Border>
-            <WrapPanel>
-                <Label Content="Question panel" HorizontalAlignment="Center" Width="400" Foreground="#FFAEAEAE" HorizontalContentAlignment="Center" FontSize="35"/>
-                <Label Content="Question" Margin="0,0,1,1" Foreground="#FFAEAEAE"/>
-                <TextBox Width="100" Foreground="#FFAEAEAE"/>
-            </WrapPanel>
-        </Border>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width = "1*"/>
             <ColumnDefinition Width = "1*"/>
             <ColumnDefinition Width = "1*"/>
         </Grid.ColumnDefinitions>

@@ -25,17 +25,19 @@ namespace WpfApp27
     public partial class MainWindow : Window
     {
         ObservableCollection<User> users;
+        ApplicationViewModelQuiz quizzes;
         Client client;
-        
         int x;
 
         public MainWindow()
         {
             InitializeComponent();
             client = new Client();
+            quizzes = new ApplicationViewModelQuiz();
             client.SendMessage("0");
+            client.SendMessage("2");
             users = client.GetUsers();
-
+            quizzes.Quizzes = client.GetQuizzes();
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -75,28 +77,40 @@ namespace WpfApp27
         }
         private void openWindow(User user) 
         {
-            if (users[x].UserType == "Student")
+            if (user.UserType == "Student")
             {
-                StudentWindow student = new StudentWindow(client, user, new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                StudentWindow student = new StudentWindow(client, user, quizzes);
                 student.Show();
             }
-            if (users[x].UserType == "Teacher")
+            if (user.UserType == "Teacher")
             {
-                TeacherWindow teacherWindow = new TeacherWindow(client, user, new ObservableCollection<Quiz>() { new Quiz { Name = "FirstQuiz", Questions = new List<string>() { "5+5", "4+8" }, Answers = new List<List<string>>() { new List<string>() { "4", "23", "10" }, new List<string>() { "10", "12" } }, Right_answer = new List<List<string>>() { new List<string>() { "10" }, new List<string>() { "12" } }, Teacher = new User("Mr. Math", "qwe@gmail.com", "qweqwe", "Teacher"), StudentsResults = new Dictionary<User, int[]>() { } } });
+                TeacherWindow teacherWindow = new TeacherWindow(client, user, quizzes);
                 teacherWindow.Show();
             }
             this.Close();
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            if (SignUpLogin.Text.Replace(" ", "")!="" && Password.Password.Replace(" ", "")!="" && SignUpLogin.Text.Replace(" ", "").Length>=3 && SignUpLogin.Text.Replace(" ", "").Length <= 80 && Password.Password.Replace(" ","").Length >=7 && Password.Password.Replace(" ", "").Length <=17 && Password.Password==ConfirmPassword.Password && CheckEmail(Mail.Text) && (Teacher.IsChecked==true || Student.IsChecked==true))
+            if (SignUpLogin.Text.Replace(" ", "")!="" && Password.Password.Replace(" ", "")!="" && SignUpLogin.Text.Replace(" ", "").Length>=3 && SignUpLogin.Text.Replace(" ", "").Length <= 30 && Password.Password.Replace(" ","").Length >=7 && Password.Password.Replace(" ", "").Length <=17 && Password.Password==ConfirmPassword.Password && (Teacher.IsChecked==true || Student.IsChecked==true))
             {
+                if (!CheckEmail(Mail.Text)) 
+                {
+                    MessageBox.Show("Email is wrong");
+                    return;
+                }
+                if (!CheckLogin(SignUpLogin.Text)) 
+                {
+                    MessageBox.Show("Login is already exists");
+                    return;
+                }
                 try
                 {
-                    if(Teacher.IsChecked == true)
-                        users.Add(new User {Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Teacher"});
+                    MessageBox.Show(Student.IsChecked.ToString());
                     if (Student.IsChecked == true)
-                        users.Add(new User { Login = SignUpLogin.Text, Password = Password.Password, Mail = Mail.Text, UserType =  "Student"});
+                        users.Add(new User { Login = SignUpLogin.Text, Mail = Mail.Text, Password = Password.Password, UserType =  "Student" });
+                    if (Teacher.IsChecked == true)
+                        users.Add(new User {Login = SignUpLogin.Text, Mail = Mail.Text, Password = Password.Password, UserType =  "Teacher"});
+                    client.SendMessage("1");
                     openWindow(users[users.Count-1]);
                 }
                 catch (Exception ex)
@@ -106,6 +120,13 @@ namespace WpfApp27
             }
             else
                 MessageBox.Show("You should fill all filds");
+        }
+        private bool CheckLogin(string login) 
+        {
+            foreach (User user in users)
+                if (user.Login == login)
+                    return false;
+            return true;
         }
         private bool CheckEmail(string email) 
         {

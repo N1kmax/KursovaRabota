@@ -60,7 +60,7 @@ namespace WpfApp27
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            TeacherWindow teacherWindow = new TeacherWindow(client, viewModel.Quizzes[currentindex].Teacher, viewModel.Quizzes);
+            TeacherWindow teacherWindow = new TeacherWindow(client, viewModel.Quizzes[currentindex].Teacher, viewModel);
             teacherWindow.Show(); 
         }
     }

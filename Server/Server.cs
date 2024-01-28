@@ -26,10 +26,14 @@ namespace ServerProgramm
             Users = db.GetUsers();
             Quizzes = db.GetQuiz();
         } 
-        public void ListenClients() 
+        public void ListenClientsUser() 
+        {
+            
+            Users = udp.GetUsers();
+        }
+        public void ListenClientsQuizzes() 
         {
             Quizzes = udp.GetQuizzes();
-            Users = udp.GetUsers();
         }
         public async void StartServer() 
         {
@@ -51,18 +55,20 @@ namespace ServerProgramm
                     await udp.SendUsersAsync(Users);
                     break;
                 case 1:
-                    gotmessage = true;
                     udp.ReceiveUsers();
-                    ListenClients();
+                    ListenClientsUser();
+                    db.AddNewUser(Users[Users.Count-1]);
+                    gotmessage = true;
                     break;
                 case 2:
                     gotmessage = true;
                     await udp.SendQuizzesAsync(Quizzes);
                     break;
                 case 3:
-                    gotmessage = true;
                     udp.ReceiveQuizzes();
-                    ListenClients();
+                    ListenClientsQuizzes();
+                    db.SaveQuiz(Quizzes);
+                    gotmessage = true;
                     break;
             }
         }
@@ -83,7 +89,6 @@ namespace ServerProgramm
             public byte[] Data { get; set; }
         }
 
-
         public void ShowUsers() 
         {
             foreach (var user in Users) 
@@ -96,7 +101,7 @@ namespace ServerProgramm
             Console.WriteLine($"count {Quizzes.Count}");
             foreach (var quiz in Quizzes) 
             {
-                Console.WriteLine($"Name: {quiz.Name}, Teacher: {quiz.Teacher}");
+                Console.WriteLine($"Name: {quiz.Name}");
             }
         }
     }
