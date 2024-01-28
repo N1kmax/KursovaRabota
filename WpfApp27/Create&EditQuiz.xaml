@@ -43,8 +43,13 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Content="Questions" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Height="56" Width="400" FontSize="35" Foreground="#FFAEAEAE" HorizontalContentAlignment="Center"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="10,366,0,0" VerticalAlignment="Top" Click="Button_Click_6" Width="70" Height="27" BorderBrush="Black"/>
-        <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,398,0,0" Click="Button_Click_3"  BorderBrush="Black" Height="26" Width="70"/>
-        <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,429,0,0" Click="Button_Click_4"  BorderBrush="Black" Height="26" Width="70"/>
+        <WrapPanel Margin="0,361,0,0">
+            <Button Content="Add" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Foreground="#FFAEAEAE" Width="70" Height="27" BorderBrush="Black" Click="Button_Click_6"/>
+            <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_3"/>
+            <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,10,150,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_4"/>
+            <Label Content="Right answer:"  VerticalAlignment="Center" Margin="0,13,5,0" Foreground="#FFAEAEAE" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
+            <TextBox x:Name="QuestionBox" Width="100" Foreground="#FFAEAEAE" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="14"/>
+            <Button Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFAEAEAE" BorderBrush="Black" Height="26" Width="70" Click="Button_Click_7"/>
+        </WrapPanel>
     </Grid>
 </Window>

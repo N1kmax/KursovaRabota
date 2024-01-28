@@ -37,6 +37,11 @@ namespace WpfApp27
             if (answerlist.SelectedIndex == -1) return;
             if (viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion].Contains(viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion][answerlist.SelectedIndex])) 
             {
+                if (viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion].Count == 1)
+                {
+                    MessageBox.Show("Question need to have at least one correct answer");
+                    return;
+                }
                 viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion].Remove(viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion][answerlist.SelectedIndex]);
                 rightanswerlist.ItemsSource = null;
                 rightanswerlist.ItemsSource = viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion];
@@ -49,6 +54,11 @@ namespace WpfApp27
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             if (rightanswerlist.SelectedIndex == -1) return;
+            if (viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion].Count == 1)
+            {
+                MessageBox.Show("Question need to have at least one correct answer");
+                return;
+            }
             viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion].Remove(viewModel.Quizzes[currentindexQuiz].Right_answer[currentindexQuestion][rightanswerlist.SelectedIndex]);
             answerlist.ItemsSource = null;
             answerlist.ItemsSource = viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion];

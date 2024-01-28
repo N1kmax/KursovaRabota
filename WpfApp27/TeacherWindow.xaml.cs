@@ -43,7 +43,7 @@ namespace WpfApp27
         private void CreationButton_Click(object sender, RoutedEventArgs e)
         {
             if (CreationNameQuizTextBox.Text.Replace(" ", "") == "" || CreationNameQuizTextBox.Text.Replace(" ","").Length > 30 || CreationNameQuizTextBox.Text.Replace(" ","").Length <3) return;
-            viewModel.Quizzes.Add(new Quiz { Name = CreationNameQuizTextBox.Text, Teacher = User, Questions = new List<string>() { }, Answers = new List<List<string>>() { }, Right_answer = new List<List<string>>() { } });
+            viewModel.Quizzes.Add(new Quiz { Name = CreationNameQuizTextBox.Text, Teacher = User, Questions = new List<string>() { "New question" }, Answers = new List<List<string>>() { new List<string>() { "Correct answer" } }, StudentsResults = new Dictionary<string, int[]>(){ }, Right_answer = new List<List<string>>() { new List<string>() { "Correct answer" } } });
             Create_EditQuiz create_EditQuiz = new Create_EditQuiz(client,viewModel.Quizzes, viewModel.Quizzes.Count-1);
             create_EditQuiz.Show();
             this.Close();
