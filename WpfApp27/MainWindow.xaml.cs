@@ -33,11 +33,11 @@ namespace WpfApp27
         {
             InitializeComponent();
             client = new Client();
-            quizzes = new ApplicationViewModelQuiz();
+            
             client.SendMessage("0");
             client.SendMessage("2");
             users = client.GetUsers();
-            quizzes.Quizzes = client.GetQuizzes();
+            quizzes = new ApplicationViewModelQuiz(client.GetQuizzes());
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -59,7 +59,7 @@ namespace WpfApp27
                     check = false;
                     
                     for (int i = 0; i<users.Count; i++)
-                        if (users[i].Login==LogInLogin.Text && users[i].Password==LogInPassword.Password)
+                        if (users[i].Login==LogInLogin.Text && AuthenticationHelper.VerifyPassword(LogInPassword.Password, users[i].Password))
                         {
                             check=true;
                             x=i;
@@ -133,6 +133,13 @@ namespace WpfApp27
             string pattern = "[.\\-_a-z0-9]+@([a-z0-9][\\-a-z0-9]+\\.)+[a-z]{2,6}";
             Match isMatch = Regex.Match(email, pattern, RegexOptions.IgnoreCase);
             return isMatch.Success;
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            LogInPanel.Visibility = Visibility.Collapsed;
+            SignUpPanel.Visibility = Visibility.Collapsed;
+            RegestrtionPanel.Visibility = Visibility.Visible;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Server;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +25,7 @@ namespace ServerProgramm
 
         public void AddNewUser(User user)
         {
+            user.Password = HashHelper.HashPassword(user.Password);
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Execute("INSERT INTO Users (Login, Mail, Password, Usertype) VALUES (@Login, @Mail, @Password, @Usertype)", user);
@@ -38,18 +40,18 @@ namespace ServerProgramm
             }
         }
 
-        public void UpdateUser(int id, float loan, float turnover, float bankaccount)
+        public void UpdateUser(int id, string password)
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Execute($"UPDATE Users SET Loan = {loan}, TurnOver = {turnover}, BankAccount = {bankaccount} WHERE Id={id+1}");
+                connection.Execute($"UPDATE Users SET Password = '{password}'  WHERE Id = {id} ");
             }
         }
         public void AddQuiz(Quiz quiz) 
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Execute("INSERT INTO Quizzes (Name, PhoneNumber, CardNumber, BankAccount, TurnOver, Loan, Date, Currency, TypeOfCard) VALUES (@Name, @PhoneNumber, @CardNumber, @BankAccount, @TurnOver, @Loan, @Date, @Currency, @TypeOfCard)", quiz);
+                
             }
         }
         public void SaveQuiz(ObservableCollection<Quiz> quizzes) 

@@ -20,12 +20,12 @@ namespace WpfApp27
     /// </summary>
     public partial class AnswersEditWindow : Window
     {
-        ApplicationViewModelQuiz viewModel = new ApplicationViewModelQuiz() { };
+        ApplicationViewModelQuiz viewModel;
         int currentindexQuiz, currentindexQuestion;
         public AnswersEditWindow(ObservableCollection<Quiz> quizzes, int currentindexQuiz, int currentindexQuestion)
         {
             InitializeComponent();
-            viewModel.Quizzes = quizzes;
+            viewModel = new ApplicationViewModelQuiz(quizzes);
             this.currentindexQuiz = currentindexQuiz;
             this.currentindexQuestion = currentindexQuestion;
             answerlist.ItemsSource = viewModel.Quizzes[currentindexQuiz].Answers[currentindexQuestion];

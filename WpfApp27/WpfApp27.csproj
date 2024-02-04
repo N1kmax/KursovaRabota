@@ -121,6 +121,9 @@
     </Compile>
     <Compile Include="ApplicationViewModelQuiz.cs" />
     <Compile Include="ApplicationViewModelUser.cs" />
+    <Compile Include="AuthenticationHelper.cs" />
+    <Compile Include="HashHelper.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Create&amp;EditQuiz.xaml.cs">
       <DependentUpon>Create&amp;EditQuiz.xaml</DependentUpon>

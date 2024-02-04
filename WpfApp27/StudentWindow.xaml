@@ -1,19 +1,20 @@
-﻿<Window x:Class="WpfApp27.StudentWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp27"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="WpfApp27.StudentWindow"
         mc:Ignorable="d"
         Title="StudentWindow" Height="450" Width="800" Closing="Window_Closing">
     <Window.Resources>
-        <Style TargetType="Border">
+        <Style TargetType="{x:Type Border}">
             <Setter Property="Background" Value="#FF282835"/>
         </Style>
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="{x:Type Button}">
                         <Border CornerRadius="7"
                         Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -30,38 +31,47 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
     </Window.Resources>
     <Grid>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Name="Results" Header="Quizzes" Height="210" Foreground="AliceBlue">
+            <TabItem x:Name="Results" Header="Quizzes" Height="210" Foreground="AliceBlue">
                 <Border>
                     <StackPanel>
                         <ListBox x:Name="Quiz" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ResultsChanged" BorderThickness="1,0,1,1" BorderBrush="White">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="5">
-                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Path=Name}"/>
-                                        <TextBlock Foreground="#FF535151" Text="{Binding Path=Teacher.Login}"/>
+                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Name}"/>
+                                        <TextBlock Foreground="#FF535151" Text="{Binding Teacher.Login}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                        <WrapPanel>
+                            <Label Content="Search:" Margin="196,0,5,0" Foreground="#FF535151" FontSize="20"/>
+                            <TextBox Width="200" TextChanged="TextBox_TextChanged" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Foreground="#FFAEAEAE" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="14"/>
+                        </WrapPanel>
                     </StackPanel>
                 </Border>
             </TabItem>
-            <TabItem Name="quizzes" Header="Results" Height="210" VerticalAlignment="Top">
+            <TabItem x:Name="quizzes" Header="Results" Height="210" VerticalAlignment="Top">
                 <Border>
                     <StackPanel>
                         <ListBox x:Name="Quizzes" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding SelectedQuiz}" Height="320" Margin="1,0,1,1" HorizontalAlignment="Center" FontSize="30" Width="320" Background="#FF282835" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="QuizzesChanged" BorderBrush="White" BorderThickness="1,0,1,1">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="5">
-                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Path=Name}"/>
-                                        <TextBlock Foreground="#FF535151" Text="{Binding Path=Teacher.Login}"/>
+                                        <TextBlock FontSize="20" Foreground="#FF535151" Text="{Binding Name}"/>
+                                        <TextBlock Foreground="#FF535151" Text="{Binding Teacher.Login}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                        <WrapPanel>
+                            <Label Content="Search:" Margin="196,0,5,0" Foreground="#FF535151" FontSize="20"/>
+                            <TextBox x:Name="ResultsTextBox" Foreground="#FFAEAEAE" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" TextChanged="TextBox_TextChanged" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="14"/>
+                        </WrapPanel>
                     </StackPanel>
                 </Border>
             </TabItem>
