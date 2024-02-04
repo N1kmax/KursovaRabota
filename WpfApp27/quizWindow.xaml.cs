@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -24,13 +25,17 @@ namespace WpfApp27
         private int currentQuestionIndex;
         private int CorrectAnswersCount = 0;
         int CurrentIndex;
+        Random random;
         ApplicationViewModelQuiz quizzes;
+        ApplicationViewModelQuiz quizzes1;
         User user;
         Client client;
         public quizWindow(Client client, ApplicationViewModelQuiz quizzes, int CurrentIndex, User user)
         {
             InitializeComponent();
+            random  = new Random();
             this.quizzes = quizzes;
+            quizzes1 = quizzes;
             this.user = user;
             this.CurrentIndex = CurrentIndex;
             this.client = client;
@@ -44,8 +49,18 @@ namespace WpfApp27
             {
                 string currentQuestion = quizzes.Quizzes[CurrentIndex].Questions[currentQuestionIndex];
                 questionTextBlock.Text = currentQuestion;
-                answersItemsControl.ItemsSource = quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex];
-                Window.Height = 75*quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex].Count;
+                for (int i = quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex].Count - 1; i >= 1; i--)
+                {
+                    int j = random.Next(i + 1);
+                    var temp = quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex][j];
+                    quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex][j] = quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex][i];
+                    quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex][i] = temp;
+                }
+                answersItemsControl.ItemsSource = quizzes1.Quizzes[CurrentIndex].Answers[currentQuestionIndex];
+                if(quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex].Count > 2)
+                    Window.Height = 100*quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex].Count;
+                else
+                    Window.Height = 250;
             }
             else
             {

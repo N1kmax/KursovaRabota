@@ -134,5 +134,12 @@ namespace WpfApp27
             Match isMatch = Regex.Match(email, pattern, RegexOptions.IgnoreCase);
             return isMatch.Success;
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            LogInPanel.Visibility = Visibility.Collapsed;
+            SignUpPanel.Visibility = Visibility.Collapsed;
+            RegestrtionPanel.Visibility = Visibility.Visible;
+        }
     }
 }

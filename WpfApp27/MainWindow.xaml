@@ -45,10 +45,11 @@
         </Border>
         <Border x:Name="LogInPanel" Visibility="Collapsed">
             <WrapPanel Orientation="Horizontal">
-                <Label Content="Log in" Margin="109,80,0,5" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE" Height="44"/>
-                <Label Content="Name" Height="27" Foreground="#FFAEAEAE" Margin="74,0,0,0"/>
+                <Button Content="Back" Width="50" Height="30" Margin="0,0,100,0" BorderBrush="Black" Click="Button_Click_4"/>
+                <Label Content="Log in" Margin="110,60,0,5" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE" Height="44"/>
+                <Label Content="Name" Height="27" Foreground="#FFAEAEAE" Margin="76,0,0,0"/>
                 <Border CornerRadius="7" BorderBrush="#FFABADB3" BorderThickness="1"
-        VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0">
+        VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="-2,0,0,0">
                     <TextBox x:Name="LogInLogin"  BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
                 </Border>
                 <Label Content="Password" Height="27" Foreground="#FFAEAEAE" Margin="56,0,0,0"/>
@@ -61,10 +62,11 @@ VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0"
         </Border>
         <Border x:Name="SignUpPanel" Visibility="Collapsed">
             <WrapPanel Orientation="Horizontal">
-                <Label Content="Sign up" Margin="109,50,0,5" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE" Height="44"/>
+                <Button Content="Back" Width="50" Height="30" Margin="0,0,100,0" BorderBrush="Black" Click="Button_Click_4"/>
+                <Label Content="Sign up" Margin="109,20,0,5" HorizontalAlignment="Center" FontSize="24" Foreground="#FFAEAEAE" Height="44"/>
                 <Label Content="Name" Height="27" Foreground="#FFAEAEAE" Margin="74,0,0,0"/>
                 <Border CornerRadius="7" BorderBrush="#FFABADB3" BorderThickness="1"
-        VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0">
+        VerticalAlignment="Center" UseLayoutRounding="True" Height="27" Width="100" Margin="0,0,0,0">
                     <TextBox x:Name="SignUpLogin" BorderThickness="0" Background="Transparent" Foreground="#FFAEAEAE"/>
                 </Border>
                 <Label Content="Email " Height="27" Foreground="#FFAEAEAE" Margin="74,0,0,0"/>
@@ -90,7 +92,7 @@ VerticalAlignment="Center" UseLayoutRounding="True" Width="100" Margin="0,0,0,0"
                 <Button Content="Sign up" Width="100" Height="30" Margin="103,10,0,0" BorderBrush="Black" Click="Button_Click_3"/>
             </WrapPanel>
         </Border>
-        <Border>
+        <Border Grid.Column="0">
             <Image  Source="Resources/quiz-icon.webp"/>
         </Border>
         <Grid.ColumnDefinitions>
