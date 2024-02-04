@@ -31,11 +31,10 @@ namespace WpfApp27
             InitializeComponent();
             User = user;
             viewModel = quizzes;
-            viewModel1 = new ApplicationViewModelQuiz();
             var v = from quiz in viewModel.Quizzes
                     where quiz.Teacher.Login == user.Login
                     select quiz;
-            viewModel1.Quizzes = new ObservableCollection<Quiz>(v.ToList());
+            viewModel1 = new ApplicationViewModelQuiz(new ObservableCollection<Quiz>(v.ToList()));
             DataContext = viewModel1;
             this.client = client;
         }
@@ -64,8 +63,12 @@ namespace WpfApp27
         private void EditQuizButton_Click(object sender, RoutedEventArgs e)
         {
             if(Quiz.SelectedIndex == -1) return;
-            Create_EditQuiz create_EditQuiz = new Create_EditQuiz(client, viewModel.Quizzes, Quiz.SelectedIndex);
-            create_EditQuiz.Show();
+            for (int i = 0; i < viewModel.Quizzes.Count; i++)
+                if (viewModel.Quizzes[i] == viewModel1.Quizzes[Quiz.SelectedIndex])
+                {
+                    Create_EditQuiz create_EditQuiz = new Create_EditQuiz(client, viewModel.Quizzes, i);
+                    create_EditQuiz.Show();
+                }
             this.Close();
         }
 

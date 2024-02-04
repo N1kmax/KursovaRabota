@@ -23,12 +23,13 @@ namespace WpfApp27
         ApplicationViewModelQuiz viewModel;
         User user;
         Client client;
+        int a;
         public StudentWindow(Client client, User user, ApplicationViewModelQuiz quizzes)
         {
             InitializeComponent();
             this.client = client;
             this.user = user;
-            viewModel = quizzes; 
+            viewModel = quizzes;
             DataContext = viewModel;
         }
 
@@ -53,12 +54,21 @@ namespace WpfApp27
                 Quiz.SelectedIndex = -1;
                 return; 
             }
+            for (int i = 0; i < viewModel.Quizzes.Count; i++)
+            {
+                if (Quizzes.SelectedItem == viewModel.Quizzes[i])
+                {
+                    a = i;
+                    MessageBox.Show(viewModel.Quizzes[i].Name);
+                    break;
+                }
+            }
             bool check = false;
-            if (!viewModel.Quizzes[Quiz.SelectedIndex].StudentsResults.ContainsKey(user.Login))
+            if (!viewModel.Quizzes[a].StudentsResults.ContainsKey(user.Login))
             {
                 check = true;
             }
-            else if (viewModel.Quizzes[Quiz.SelectedIndex].StudentsResults[user.Login][2]!=-1)
+            else if (viewModel.Quizzes[a].StudentsResults[user.Login][2]!=-1)
             {
                 check = false;
                 MessageBox.Show("You've already exhausted your number of attempts.");
@@ -83,7 +93,16 @@ namespace WpfApp27
                 Quizzes.SelectedIndex = -1;
                 return;
             }
-            if (!viewModel.Quizzes[Quizzes.SelectedIndex].StudentsResults.ContainsKey(user.Login))
+            for (int i = 0; i < viewModel.Quizzes.Count; i++)
+            {
+                if (Quizzes.SelectedItem == viewModel.Quizzes[i])
+                {
+                    a = i;
+                    MessageBox.Show(viewModel.Quizzes[i].Name);
+                    break;
+                }
+            }
+            if (!viewModel.Quizzes[a].StudentsResults.ContainsKey(user.Login))
             {
                 MessageBox.Show($"You have never tried this quiz");
             }
@@ -93,26 +112,26 @@ namespace WpfApp27
                     switch (i)
                     {
                         case 0:
-                            x = viewModel.Quizzes[Quizzes.SelectedIndex].StudentsResults[user.Login][0];
+                            x = viewModel.Quizzes[a].StudentsResults[user.Login][0];
                             break;
                         case 1:
-                            y = viewModel.Quizzes[Quizzes.SelectedIndex].StudentsResults[user.Login][1];
+                            y = viewModel.Quizzes[a].StudentsResults[user.Login][1];
                             break;
                         case 2:
-                            z = viewModel.Quizzes[Quizzes.SelectedIndex].StudentsResults[user.Login][2];
+                            z = viewModel.Quizzes[a].StudentsResults[user.Login][2];
                             break;
                     }
                 if (y == -1)
                 {
-                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}");
+                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[a].Answers.Count}");
                 }
                 else if (z==-1)
                 {
-                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}\nSecond attempt: {y}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}");
+                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[a].Answers.Count}\nSecond attempt: {y}/{viewModel.Quizzes[a].Answers.Count}");
                 }
                 else
                 {
-                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}\nSecond attempt: {y}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}\nThird attempt: {z}/{viewModel.Quizzes[Quizzes.SelectedIndex].Answers.Count}\n");
+                    MessageBox.Show($"Your results:\nFirst attempt: {x}/{viewModel.Quizzes[a].Answers.Count}\nSecond attempt: {y}/{viewModel.Quizzes[a].Answers.Count}\nThird attempt: {z}/{viewModel.Quizzes[a].Answers.Count}\n");
                 }
             }
             Quizzes.SelectedIndex = -1;
@@ -122,6 +141,11 @@ namespace WpfApp27
         {
             client.SetQuizzes(viewModel.Quizzes);
             client.SendMessage("3");
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
         }
     }
 }

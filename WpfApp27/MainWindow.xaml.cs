@@ -33,11 +33,11 @@ namespace WpfApp27
         {
             InitializeComponent();
             client = new Client();
-            quizzes = new ApplicationViewModelQuiz();
+            
             client.SendMessage("0");
             client.SendMessage("2");
             users = client.GetUsers();
-            quizzes.Quizzes = client.GetQuizzes();
+            quizzes = new ApplicationViewModelQuiz(client.GetQuizzes());
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

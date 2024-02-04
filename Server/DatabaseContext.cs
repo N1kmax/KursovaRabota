@@ -38,18 +38,18 @@ namespace ServerProgramm
             }
         }
 
-        public void UpdateUser(int id, float loan, float turnover, float bankaccount)
+        public void UpdateUser(int id, string user, string mail, string password)
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Execute($"UPDATE Users SET Loan = {loan}, TurnOver = {turnover}, BankAccount = {bankaccount} WHERE Id={id+1}");
+                connection.Execute($"UPDATE Users SET Login = {user}, Mail = {mail}, Password = {password}  WHERE Id={id+1}");
             }
         }
         public void AddQuiz(Quiz quiz) 
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Execute("INSERT INTO Quizzes (Name, PhoneNumber, CardNumber, BankAccount, TurnOver, Loan, Date, Currency, TypeOfCard) VALUES (@Name, @PhoneNumber, @CardNumber, @BankAccount, @TurnOver, @Loan, @Date, @Currency, @TypeOfCard)", quiz);
+                
             }
         }
         public void SaveQuiz(ObservableCollection<Quiz> quizzes) 
