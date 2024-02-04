@@ -59,7 +59,7 @@ namespace WpfApp27
                     check = false;
                     
                     for (int i = 0; i<users.Count; i++)
-                        if (users[i].Login==LogInLogin.Text && users[i].Password==LogInPassword.Password)
+                        if (users[i].Login==LogInLogin.Text && AuthenticationHelper.VerifyPassword(LogInPassword.Password, users[i].Password))
                         {
                             check=true;
                             x=i;

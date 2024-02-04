@@ -59,7 +59,6 @@ namespace WpfApp27
                 if (Quizzes.SelectedItem == viewModel.Quizzes[i])
                 {
                     a = i;
-                    MessageBox.Show(viewModel.Quizzes[i].Name);
                     break;
                 }
             }
@@ -98,7 +97,6 @@ namespace WpfApp27
                 if (Quizzes.SelectedItem == viewModel.Quizzes[i])
                 {
                     a = i;
-                    MessageBox.Show(viewModel.Quizzes[i].Name);
                     break;
                 }
             }

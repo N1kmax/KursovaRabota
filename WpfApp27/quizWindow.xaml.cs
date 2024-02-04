@@ -45,10 +45,10 @@ namespace WpfApp27
                 string currentQuestion = quizzes.Quizzes[CurrentIndex].Questions[currentQuestionIndex];
                 questionTextBlock.Text = currentQuestion;
                 answersItemsControl.ItemsSource = quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex];
+                Window.Height = 75*quizzes.Quizzes[CurrentIndex].Answers[currentQuestionIndex].Count;
             }
             else
             {
-                
                 this.Close();
             }
 

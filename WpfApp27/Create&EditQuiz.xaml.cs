@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -123,6 +124,14 @@ namespace WpfApp27
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             studentlist.SelectedIndex =  -1;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (studentlist.SelectedIndex == -1) return;
+            viewModel.Quizzes[currentindex].StudentsResults.Remove(studentlist.SelectedItem.ToString());
+            studentlist.ItemsSource = null;
+            studentlist.ItemsSource = viewModel.Quizzes[currentindex].StudentsResults.Keys;
         }
     }
 }
